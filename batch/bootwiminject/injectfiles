@@ -1,0 +1,9 @@
+imagex /mountrw C:\temp\amd64\winpe.wim 1 C:\temp\amd64\mount
+copy /y mapdrive.hta C:\temp\amd64\mount
+copy /y winpeshl.ini C:\temp\amd64\mount\Windows\System32\
+imagex /unmount /commit C:\temp\amd64\mount
+380 5967
+imagex /mountrw C:\temp\x86\winpe.wim 1 C:\temp\x86\mount
+copy /y mapdrive.hta C:\temp\x86\mount
+copy /y winpeshl.ini C:\temp\x86\mount\Windows\System32\
+imagex /unmount /commit C:\temp\x86\mount
