@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>Map Next Available Drive</title>
+<HTA:APPLICATION 
+ ID="MapNextDrive"
+ APPLICATIONNAME="MapNextAvailableDrive"
+ SCROLL="off"
+ SINGLEINSTANCE="no"
+>
+<style>
+ .style1
+ {
+ text-align: center;
+ }
+</style>
+<script type="text/vbscript">
+'***************************************
+'*** Original code by Simon Zeltser
+'*** Converted into an HTA and expanded
+'*** functionality by Jim Turner
+'***************************************
+Sub Window_Onload
+ self.focus
+ self.ResizeTo 425,300	'w h
+ text1.focus
+End Sub
+
+Sub Map_It
+ filePath = Text1.value
+ If Trim(filePath) = "" Then
+  text1.focus
+  Exit Sub
+ End If
+ Set dict = CreateObject("Scripting.Dictionary")
+ FillDrives dict
+ nextDrive = GetNextDriveLetter(dict)
+ If (nextDrive = "-1") then
+  Msgbox "There is no place to put the map"
+ Else
+  MapNetworkDrive nextDrive, filePath
+ End if
+ Set dict = Nothing
+End Sub
+
+Function GetNextDriveLetter(ByRef dict)
+ GetNextDriveLetter = "-1"
+ Set f = CreateObject("Scripting.FileSystemObject")
+ For Each drive in f.drives
+  curDrive = left(drive,1)
+  dict(curDrive) = true
+ Next
+ Items = dict.Items   ' Get the items.
+ For i = 0 To dict.Count -1
+  If (Items(i) = false) Then
+   GetNextDriveLetter = CHR(ASC("A") + i)
+   Exit For
+  End If
+ Next
+End Function
+
+Sub FillDrives(ByRef dict)
+ For i = ASC("A") to ASC("Z")
+  dict.Add CHR(i), false
+ Next
+End Sub
+
+Sub MapNetworkDrive(ByVal driveLetter, ByVal drivePath)
+ On Error Resume Next
+ Set drive = CreateObject("WScript.Network")
+If Trim(AUID.value) <> "" Then
+ drive.mapnetworkdrive driveLetter & ":",drivePath,select1.value,Trim(AUID.value),Trim(AUPass.value)
+Else
+ drive.mapnetworkdrive driveLetter & ":",drivePath,select1.value
+End If
+ If Err.Number <> 0 Then
+  Msgbox "Error: " & Err.Description & " Source: " & Err.Source
+  Err.Clear
+  text1.focus
+  Exit Sub
+ Else
+  Msgbox "Mapped drive " & driveLetter & " to " & drivePath
+ End If
+End Sub
+
+</script>
+</head>
+<BODY STYLE="filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, 
+StartColorStr='#ffffff', EndColorStr='#d3d3d3')">
+<table align="center" style="width: 330px">
+<tr>
+<td style="text-align: center">
+Map Next Available drive to this Location:</td>
+</tr>
+<tr>
+<td>
+<input id="Text1" style="width: 330px" type="text" size="" value="\\server\Volume_1\Repairs\winstall\" /></td>
+</tr>
+</table>
+<table align="center" style="width: 196px">
+<tr>
+<td class="style1">
+Alternate UserID</td>
+</tr>
+<tr>
+<td class="style1">
+<input name="AUID" size="14" style="width: 190px"></td>
+</tr>
+<tr>
+<td class="style1">
+Password</td>
+</tr>
+<tr>
+<td class="style1">
+<input type="password" name="AUPass" size="14" style="width: 130px"></td>
+</tr>
+<tr>
+<td class="style1">
+Persistent</td>
+</tr>
+<tr>
+<td class="style1">
+<select id="Select1" name="Persist" style="width: 50px">
+<option selected value=False>No</option>
+<option value=True>Yes</option>
+<option></option>
+</select></td>
+</tr>
+<tr>
+<td class="style1">
+<input id="Button1" type="button" onclick="Map_It" value="MapIt" 
+/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input id="Button2" type="button" onclick=window.close value="  Exit " 
+/></td>
+</tr>
+</table>
+</BODY>
+</html>
