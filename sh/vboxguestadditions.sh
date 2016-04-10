@@ -1,4 +1,6 @@
 #INSERT GUEST ADDITIONS DISC IGNORE ERROR
+#NOT THAT IT'LL MATTER CAUSE YOU JUST WANT COPY PASTE TO WORK.
+# JUST USE ANOTHER WINDOWS MACHINE ON THE SUBNET AND PUTTY IN.  
 mount /dev/cdrom /mnt              # or any other mountpoint
 cd /mnt
 ./VBoxLinuxAdditions.run
