@@ -6,7 +6,7 @@ The Script Depot is a collection of admin scripts written in the past to solve o
 
 ### What types of script?
 
-Included:
+**Included:**
 * Powershell
 * Batch
 * Shell (bash)
