@@ -1,4 +1,4 @@
-# Script Depot – A collection of admin scripts.
+# Script Depot â€“ A collection of admin scripts.
 
 ## Purpose
 
@@ -6,7 +6,11 @@ The Script Depot is a collection of admin scripts written in the past to solve o
 
 ### What types of script?
 
-Included are powershell, batch, bash, and  VBS scripts with more to come. 
+Included:
+*Powershell
+*Batch
+*Shell (bash)
+*VbScript
 
 ## License
 Copyright [2016] [Ryan Morris and Brad Gillap]
