@@ -7,10 +7,10 @@ The Script Depot is a collection of admin scripts written in the past to solve o
 ### What types of script?
 
 Included:
-*Powershell
-*Batch
-*Shell (bash)
-*VbScript
+* Powershell
+* Batch
+* Shell (bash)
+* VbScript
 
 ## License
 Copyright [2016] [Ryan Morris and Brad Gillap]
