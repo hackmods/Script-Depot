@@ -3,7 +3,8 @@ REM Create the needed files
 echo > .\7B296FB0-376B-497e-B012-9C450E1B7327-5P-0.C7483456-A289-439d-8115-601632D005A0
 echo > .\7B296FB0-376B-497e-B012-9C450E1B7327-5P-1.C7483456-A289-439d-8115-601632D005A0
 
-set skms=Research1.cfav.nc.com
+set skms=ADserver.example.com
+REM set skms=192.168.1.69
 
 for %%i in (. . . . . . . . . . . . . . . . . . . . . . . . . .) do call :Act %skms%
 
@@ -31,6 +32,7 @@ timeout /T 2
 
 cscript.exe "%systemroot%\system32\slmgr.vbs" /skms %1
 
+REM change KMS key to OS specific key
 cscript.exe "%systemroot%\system32\slmgr.vbs" /ipk MRPKT-YTG23-K7D7T-X2JMM-QY7MG
 
 cscript.exe "%systemroot%\system32\slmgr.vbs" /ato
