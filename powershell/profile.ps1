@@ -10,7 +10,9 @@ The script will run various functions outlined every time the user opens the she
 Get-DriveSizes
 
 .NOTES
-Drop the this in your %USERPROFILE%/Documents/WindowsPowerShell/profile.ps1
+To create a profile run
+New-Item -ItemType File -Path $profile -Force
+notepad $profile
 
 .LINK
 http://www.bradgillap.com
