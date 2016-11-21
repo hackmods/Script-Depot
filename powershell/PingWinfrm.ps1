@@ -22,11 +22,14 @@ $bytes = "32"
 $TTL = "80"
 $pingNumber = 4
 
+
  #ping the localhost
 function pingHost()
 {
 
+$hostNotFound = "The host was not found for $txtHost.Text"
 
+# Properties from test-connection
 
     $prop = @{N=’IPV4’; E={$_.IPV4Address}},
             @{N=’IPV6’; E={$_.IPV6Address}},
@@ -35,14 +38,21 @@ function pingHost()
             @{N=’TTL’; E={$_.TimeToLive}}
 
 
-    #changed from forech loop to a for loop
-    for($num = 1; $num -le $pingNumber; $num++){
-    #runs test-connection once then displays results
-    $result = Test-Connection -ComputerName $txtHost.Text -BufferSize $txtbytes.Text -TimeToLive $txtTTL.Text -Count 1 -Verbose| format-list -property $prop | Out-String
-    start-sleep -Seconds 1
-    $rtxt.Appendtext($result)
-    }
+#runs test-connection once then displays results
+    for($num = 1; $num -le $pingNumber; $num++)
+    {
+        $result = Test-Connection -ComputerName $txtHost.Text -BufferSize $txtbytes.Text -TimeToLive $txtTTL.Text -Count 1 -Verbose| format-list -property $prop | Out-String
+        start-sleep -Seconds 1
 
+        if ($result -like "Test-Connection : Testing connection to computer*") 
+        {
+            $rtxt.AppendText($hostNotFound)
+        }
+        else 
+        {
+            $rtxt.Appendtext($result)
+        }
+    }
 }
 
 
