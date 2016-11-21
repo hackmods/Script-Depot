@@ -30,13 +30,15 @@ function pingHost()
 
     $prop = @{N=’IPV4’; E={$_.IPV4Address}},
             @{N=’IPV6’; E={$_.IPV6Address}},
-            @{N=’Latency’; E={$_.ResponseTime}}
+            @{N=’Latency’; E={$_.ResponseTime}},
+            @{N=’Bytes’; E={$_.BufferSize}},
+            @{N=’TTL’; E={$_.TimeToLive}}
 
 
     #changed from forech loop to a for loop
     for($num = 1; $num -le $pingNumber; $num++){
     #runs test-connection once then displays results
-    $result = Test-Connection -ComputerName $txtHost.Text -BufferSize $bytes -TimeToLive $txtTTL.Text -Count 1 -Verbose| format-list -property $prop | Out-String
+    $result = Test-Connection -ComputerName $txtHost.Text -BufferSize $txtbytes.Text -TimeToLive $txtTTL.Text -Count 1 -Verbose| format-list -property $prop | Out-String
     start-sleep -Seconds 1
     $rtxt.Appendtext($result)
     }
