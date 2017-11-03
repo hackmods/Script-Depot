@@ -1,0 +1,43 @@
+#Mysql backup script
+
+$command = 'C:\Program Files\MySQL\MySQL Workbench 6.3 CE\mysqldump.exe'
+$params = '--user=root --password=password  --host=localhost --port=3306 --result-file="c:\db\backup.%date:~10,4%%date:~7,2%%date:~4,2%.sql" --default-character-set=utf8 --all-databases --single-transaction=TRUE --quick'
+
+$DayOfMonth = Get-Date -UFormat "%d"
+$DayOfWeek = (Get-Date).DayOfWeek
+#Write-Host $DayOfMonth
+#Write-Host $DayOfWeek
+
+#Weekly Backup
+if($DayOfWeek -Match "Saturday")
+{
+echo 'Starting Weekly Backup'
+Remove-Item –path c:\db\Weekly3.sql
+Rename-Item c:\db\Weekly2.sql Weekly3.sql
+Rename-Item c:\db\Weekly1.sql Weekly2.sql
+
+&$command --user=root --password=password  --host=localhost --port=3306 --result-file="c:\db\vxAlphaWeekly1.sql" --default-character-set=utf8 --all-databases --single-transaction=TRUE --quick
+echo ''
+}
+
+#Monthly Backup
+if($DayOfMonth -eq 1)
+{
+echo 'Starting Monthly Backup'
+Remove-Item –path c:\db\Monthly3.sql
+Rename-Item c:\db\Monthly2.sql Monthly3.sql
+Rename-Item c:\db\Monthly1.sql Monthly2.sql
+
+&$command --user=root --password=password  --host=localhost --port=3306 --result-file="c:\db\Monthly1.sql" --default-character-set=utf8 --all-databases --single-transaction=TRUE --quick
+echo ''
+}
+
+# &cd C:\db\
+echo 'Starting Daily Backup'
+Remove-Item –path c:\db\Daily3.sql
+Rename-Item c:\db\Daily2.sql Daily3.sql
+Rename-Item c:\db\Daily1.sql Daily2.sql
+
+&$command --user=root --password=password  --host=localhost --port=3306 --result-file="c:\db\Daily1.sql" --default-character-set=utf8 --all-databases --single-transaction=TRUE --quick
+echo 'Completed'
+
